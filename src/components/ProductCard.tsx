@@ -1,9 +1,10 @@
-import React, { ReactNode, useContext } from "react";
+import React, { ReactNode, useContext, useState } from "react";
 import { Product } from "src/productsData";
 import { CartContext } from "../components/CartContext";
 
+import Spinner from "../components/Spinner";
+
 interface ProductCardProps {
-    image: ReactNode;
     product: Product;
     lang: string;
     children?: React.ReactNode;
@@ -23,18 +24,39 @@ const CardWrapper: React.FC<CardWrapperProps> = ({ children }) => {
     );
 };
 
+const CardImage: React.FC<ProductCardProps> = ({ product, lang
+}) => {
+    const [isLoading, setIsLoading] = useState(true);
+    const imageLoaded = () => {
+        setIsLoading(false);
+    };
+    return (
+        <div className="text-center">
+            {
+                <>{isLoading && <Spinner />}
+                    <img
+                        className="w-full h-48 object-cover"
+                        src={product.image}
+                        alt={lang === "fi"
+                            ? product.fi.alt
+                            : product.en.alt}
+                        onLoad={() => imageLoaded()}
+                    />
+                </>
+            }
+        </div>
+    );
+};
+
 // 'ADD TO CART' CARD
 const ProductAddToCart: React.FC<ProductCardProps> = ({
-    image,
     product,
     lang
 }) => {
     const { dispatch } = useContext(CartContext);
     return (
         <CardWrapper>
-            <div className="text-center">
-                {image}
-            </div>
+            <CardImage product={product} lang={lang}></CardImage>
             <div className="p-8">
                 {/* Name */}
                 <h5 className="text-2xl font-semibold text-white">
@@ -85,22 +107,19 @@ const ProductAddToCart: React.FC<ProductCardProps> = ({
                     </button>
                 </div>
             </div>
-        </CardWrapper>
+        </CardWrapper >
     );
 }
 
 // 'COMING SOON' CARD
 const ProductSoon: React.FC<ProductCardProps> = ({
-    image,
     product,
     lang,
     children
 }) => {
     return (
         <CardWrapper>
-            <div className="text-center">
-                {image}
-            </div>
+            <CardImage product={product} lang={lang}></CardImage>
             <div className="p-8">
                 {/* Name */}
                 <h5 className="text-2xl font-semibold text-white">
@@ -111,16 +130,13 @@ const ProductSoon: React.FC<ProductCardProps> = ({
                 {children}
                 {/* Description 
                      // since the code uses p.fi.description to iterate, instead of using p.fi.description[idx] (again) in the loop, it uses fiDescription*/}
-                {
-                    product.fi.description.map((fiDescription: string, idx: number) => (
-                        <p key={idx} className="mt-4 text-sky-100">
-                            {
-                                lang === "fi" ? fiDescription : product.en.description[idx]
-                            }
-
-                        </p>
-                    ))
-                }
+                {product.fi.description.map((fiDescription: string, idx: number) => (
+                    <p key={idx} className="mt-4 text-sky-100">
+                        {
+                            lang === "fi" ? fiDescription : product.en.description[idx]
+                        }
+                    </p>
+                ))}
                 {/* Info URL */}
                 <p className=" text-sky-100">
                     <a
@@ -156,16 +172,12 @@ const ProductSoon: React.FC<ProductCardProps> = ({
 
 // 'MESSAGE US' CARD
 const ProductMessageUs: React.FC<ProductCardProps> = ({
-    image,
     product,
     lang,
-    
 }) => {
     return (
         <CardWrapper>
-            <div className="text-center">
-                {image}
-            </div>
+            <CardImage product={product} lang={lang}></CardImage>
             <div className="p-8">
                 {/* Name */}
                 <h5 className="text-2xl font-semibold text-white">
@@ -173,7 +185,6 @@ const ProductMessageUs: React.FC<ProductCardProps> = ({
                         ? product.fi.name
                         : product.en.name}
                 </h5>
-               
                 {/* Descriptions */}
                 {product.fi.description.map((fiDescription: string, idx: number) => (
                     <p key={idx} className="mt-4 text-sky-100">
@@ -181,8 +192,7 @@ const ProductMessageUs: React.FC<ProductCardProps> = ({
                             lang === "fi" ? fiDescription : product.en.description[idx]
                         }
                     </p>
-                ))
-                }
+                ))}
                 {/* CTA */}
                 <div className="mt-4 text-right">
                     <a

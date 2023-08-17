@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 import { LanguageContext } from "../components/LanguageContext";
-import { useState } from "react";
-import Spinner from "../components/Spinner";
 
 import { Product, productsData } from "src/productsData";
 import { ProductAddToCart, ProductMessageUs, ProductSoon } from "src/components/ProductCard";
@@ -12,14 +10,11 @@ productsData.forEach(product => {
     productByName[product.indexName] = product;
 });
 
-
 export default function Products() {
     const { language } = useContext(LanguageContext) as {
         language: string;
         setLanguage: (language: string) => void;
     };
-    const [isLoading, setIsLoading] = useState(true);
-
     const productsByIdx: { [idx: number]: Product } = {};
     //
     productsData.forEach((product, idx) => {

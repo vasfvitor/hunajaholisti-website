@@ -1,7 +1,6 @@
 import React, { ReactNode, useContext, useState } from "react";
 import { Product } from "src/productsData";
 import { CartContext } from "../components/CartContext";
-
 import Spinner from "../components/Spinner";
 
 interface ProductCardProps {

@@ -141,7 +141,7 @@ export const productsData: Product[] = [
         "Propolikseksi sanotaan ainetta jolla mehiläiset kittaavat turhat raot pesässä. Propoliksella on desinfioiva vaikutus mehiläispesässä. Mehiläiset keräävät aineksia propolikseen pensaiden ja puiden silmuista. Silmut erittävät pihkamaisia ja tuoksuvia hartsimaisia aineita.",
         "Lisätietoa propoliksesta voit lukea esimerkiksi täältä: ",
       ],
-      alt: "Siitepöly",
+      alt: "Propolis",
     },
     en: {
       name: "PROPOLIS",
@@ -149,7 +149,7 @@ export const productsData: Product[] = [
         "Propolis is a substance bees use to seal off unwanted holes in the hive. Propolis has a disinfectant effect in the beehive. Bees collect the ingredients for propolis from the buds of trees and shrubs. Buds secrete resinous and fragrant resinous substances.",
         "More information about propolis can be found here: ",
       ],
-      alt: "Pollen",
+      alt: "Propolis",
     },
     image: "HHlogo.jpg",
     moreInfoUrl:
